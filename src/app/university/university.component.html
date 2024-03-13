@@ -1,0 +1,38 @@
+<!-- university.component.html -->
+<div>
+    <input type="text" placeholder="Search" [(ngModel)]="searchTerm">
+    <table class="table table-striped">
+        <thead >
+            <tr>
+                <th>SNo</th>
+                <th>University Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let university of universities | filter: searchTerm; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>
+                    <ng-container
+                        *ngIf="(!selectedUniversity || selectedUniversity !== university ); else editUniversityForm">
+                        {{ university.name }}
+                    </ng-container>
+                    <ng-template #editUniversityForm>
+                        <input type="text" [(ngModel)]="selectedUniversity.name" placeholder="University Name">
+                    </ng-template>
+                </td>
+                <td>
+                    <button (click)="navigateToWebsite(university.web_pages[0])">View Website</button>
+                    <button *ngIf="isAdmin()" (click)="editUniversity(university)">Edit</button>
+                    <button *ngIf="isAdmin()" (click)="deleteUniversity(university)">Delete</button>
+                    <button *ngIf="selectedUniversity === university" (click)="updateUniversity()">Update</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button *ngIf="isAdmin()" (click)="addUniversity()">Add University</button>
+    <div *ngIf="showAddForm">
+        <input type="text" placeholder="Enter University Name" [(ngModel)]="newUniversity.name">
+        <button (click)="addUniversity()">Add</button>
+    </div>
+</div>

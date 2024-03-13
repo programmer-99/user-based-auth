@@ -1,0 +1,14 @@
+<!-- shared/header/header.component.html -->
+
+  <header *ngIf="authService.isLoggedIn()" class="site-header">
+    <div class="site-identity">
+      <h1><a routerLink="./dashboard">My Web</a></h1>
+    </div>  
+    <nav class="site-navigation">
+      <ul class="nav">
+        <li><a href="#">About</a></li> 
+        <li (click)="redirectToUniversity()"><a >About University</a></li> 
+        <li  (click)="logout()"><a >Logout</a></li> 
+      </ul>
+    </nav>
+  </header>
